@@ -5,6 +5,28 @@
 //Экспортируем функцию из main.s написанную на ассемблере.
 extern void array_write_asm (int32_t* array_ptr, size_t array_size, int32_t* new_array_ptr );
 
+
+/*
+Common function
+*/
+void ableev_lab (int32_t arr, size_t size,int32_t n,int out[]);
+
+/*
+int b - номер элемента после которого записывать
+int arr[] 
+int out[] 
+*/
+uint8_t fun (int32_t arr[], size_t size, int32_t n);
+
+/*
+int b - номер элемента после которого записывать
+int arr[] 
+int out[] 
+*/
+void write(int b , int arr[], int out[]);
+
+	
+
 //подпрограмма search_22 поиска числа 22, возвращаяет номер первого эллемента входного массива стоящего после 22
 int search_22 (int arr[]){
 //в 'a' храниться очередной эллемент входного массива

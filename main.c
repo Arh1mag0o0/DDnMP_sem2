@@ -19,14 +19,16 @@ int32_t new_array [sizeof(array_original)/sizeof(int32_t)]= {0};
 
 int m = 3; // число обрабатываемых массивов на зяыке си
 // инициализируем первичные массивы с числами для решения задания на языке си
-int array_originalc [][10] = {
-{-1,2,-3,4,-5,6,7,22,9,-10}, 
-{1,22,3,4,5,6,7,8,9,-10}, 
-{22,2,22,4,5,6,7,22,9,-10}
-};
+int32_t array_originalc1 [] = {-1,2,-3,4,-5,6,7,22,9,-10};
+int32_t array_originalc2 [] = {-1,2,-3,4,-5,6,7,22,9,-10};
+int32_t array_originalc3 [] = {-1,2,-3,4,-5,6,7,22,9,-10};
+int32_t array_originalc4 [] = {-1,2,-3,4,-5,6,7,22,9,-10};
 
 // обявляем выходные массивы для решения задания на языке си
-int arrayc[][9];
+int32_t arrayc1[sizeof(array_originalc2)/sizeof(int32_t) ];
+int32_t arrayc2[sizeof(array_originalc2)/sizeof(int32_t) ];
+int32_t arrayc3[sizeof(array_originalc2)/sizeof(int32_t) ];
+int32_t arrayc4[sizeof(array_originalc2)/sizeof(int32_t) ];
 
 /*
 для решения задания на языке си объявим переменную 'b' 
@@ -58,9 +60,6 @@ sizeof(array_original)/sizeof(int32_t), new_array);
 далее вызывается функция write, которая производит запись в новый массив всех эллементов стоящих после 22
 после чего повторяется цикл с следующим входным массивом
 */    
-        for (;i<m ; i++)   {
-    b = search_22(array_originalc[i]);
-	write   (b, array_originalc[i], arrayc[i]);
-        }
+
 return 0;
 }
