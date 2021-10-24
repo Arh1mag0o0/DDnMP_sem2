@@ -2,64 +2,61 @@
 #include <stdint.h>
 #include "functions.h"
 
+
 /* Задание:
-сформировать массив из десяти однобайтных чисел, найти в нем 22. 
+сформировать 4 массива, найти в них число x. 
 Все числа, стоящие после этого числа, переписать в другой массив.
-Дополнительно даны задания:
-1 реализовать выполнение задания на языке ассемблер с помощью подпрограмм
-2 реализовать выполнения задания на языке си с помощью подпрограммм
-2_2 реализовать выполнения задания на языке си для неопределенного колличества исходных массивов
 */
-// Решение задния реализованно на языке ассемблер для одного массива и решение задания на языке си для 'm' массивов
 
-// инициализируем первичный массив с числами для решения задания на ассемблере
-int32_t array_original [10] = {-1,2,-3,4,-5,6,7,22,9,-10};
-// Объявляем мпустой массив для передачи его адреса в функцию array_write_asm, которая выполняет задание на ассемблере
-int32_t new_array [sizeof(array_original)/sizeof(int32_t)]= {0};
+// инициализируем первичные массивы с числами для решения задания 
+int32_t array_original_1 [] = {-1,2,-3,2546,20,50};
+int32_t array_original_2 [] = {-1,2,-3,4,-5,6,7,22,9,-10,102,1025,1210,55,84,54,75,20,65};
+int32_t array_original_3 [] = {-1,2,-3,4,-5,6,7,22,9,-10};
+int32_t array_original_4 [] = {-1,2,-3,4,-5,6,7,22,9,-10};
 
-int m = 3; // число обрабатываемых массивов на зяыке си
-// инициализируем первичные массивы с числами для решения задания на языке си
-int32_t array_originalc1 [] = {-1,2,-3,4,-5,6,7,22,9,-10};
-int32_t array_originalc2 [] = {-1,2,-3,4,-5,6,7,22,9,-10};
-int32_t array_originalc3 [] = {-1,2,-3,4,-5,6,7,22,9,-10};
-int32_t array_originalc4 [] = {-1,2,-3,4,-5,6,7,22,9,-10};
+// Объявляем выходные массивы для решения задания 
+int32_t array_a1[sizeof(array_original_1)/sizeof(int32_t) ];
+int32_t array_a2[sizeof(array_original_2)/sizeof(int32_t) ];
+int32_t array_a3[sizeof(array_original_3)/sizeof(int32_t) ];
+int32_t array_a4[sizeof(array_original_4)/sizeof(int32_t) ];
 
-// обявляем выходные массивы для решения задания на языке си
-int32_t arrayc1[sizeof(array_originalc2)/sizeof(int32_t) ];
-int32_t arrayc2[sizeof(array_originalc2)/sizeof(int32_t) ];
-int32_t arrayc3[sizeof(array_originalc2)/sizeof(int32_t) ];
-int32_t arrayc4[sizeof(array_originalc2)/sizeof(int32_t) ];
-
-/*
-для решения задания на языке си объявим переменную 'b' 
-в которую будет возвращяться номер первого эллемента массива стоящего после 22
-и переменную 'i' будет храниться номер обрабатываемого массива
-*/
-int b; 
-int i=0; 
-
+int32_t arrayc1[sizeof(array_original_1)/sizeof(int32_t) ];
+int32_t arrayc2[sizeof(array_original_2)/sizeof(int32_t) ];
+int32_t arrayc3[sizeof(array_original_3)/sizeof(int32_t) ];
+int32_t arrayc4[sizeof(array_original_4)/sizeof(int32_t) ];
 // Основная программа
 int main ()
 {    
-    /* решения задания на языке ассемблер
-    Функция выполняет задание на ассемблере, с помощью двух подпрограмм: 
-    1 array_search_asm - поиск числа 22, 
-    2 array_write_asm - запись эллементов стоящих после 22 в новый массив.
+    // объявляем элемент, который будем искать в массиве, для каждого массива можно выбирать любое число
+int32_t x = 20;
+
+    // вызываем функцию, которая выполняет задание на ассемблере
+    lab_asm(array_original_1,
+sizeof(array_original_1)/sizeof(int32_t), array_a1, x);
     
-    Вызываем функцию array_write_asm, тело которой описано в файле main_1.s.
-Так как, в языке ассемблера не функций malloc() и вообще нет механизма выделения
-данных из кучи, то мы заранее выделяем место в оперативной памяти для
-обработанного массива, поэтому нам необходимо передать адрес нового массива в
-функцию. Размерность массива такая же как у оригинального массива.*/   
-    array_write_asm(array_original,
-sizeof(array_original)/sizeof(int32_t), new_array);
-
-    /*решение задания на языке си
-Цикл 'for' выполняет последовательный вызов функций для выполнения задания для i-ого массива
-в переменную 'b' из функции search_22 возвращается номер первого эллемента массива стоящего после 22
-далее вызывается функция write, которая производит запись в новый массив всех эллементов стоящих после 22
-после чего повторяется цикл с следующим входным массивом
-*/    
-
+    // поменяем искомый эллемент
+    x = 75;
+    lab_asm(array_original_2,
+sizeof(array_original_2)/sizeof(int32_t), array_a2, x);
+    
+    x = 22;
+    lab_asm(array_original_3,
+sizeof(array_original_3)/sizeof(int32_t), array_a3, x);
+    
+    lab_asm(array_original_4,
+sizeof(array_original_4)/sizeof(int32_t), array_a4, x);
+  
+    x = -3;
+    // вызываем функцию, которая выполняет задание на Си
+    ableev_lab_c(array_original_1, sizeof(array_original_1)/sizeof(int32_t), x, arrayc1);
+    
+    x = 75;
+    ableev_lab_c(array_original_2, sizeof(array_original_2)/sizeof(int32_t), x, arrayc2);
+    
+    ableev_lab_c(array_original_3, sizeof(array_original_3)/sizeof(int32_t), x, arrayc3);
+    
+    x = 2;
+    ableev_lab_c(array_original_4, sizeof(array_original_4)/sizeof(int32_t), x, arrayc4);
+    
 return 0;
 }

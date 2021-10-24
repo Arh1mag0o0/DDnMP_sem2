@@ -1,5 +1,5 @@
 Stack_Size EQU 0x400
-        AREA STACK, NOINIT, READWRITE, ALIGN=3
+        AREA STACK, NOINIT, READWRITE, ALIGN=4
 Stack_Mem SPACE Stack_Size
 __initial_sp
 
@@ -7,7 +7,7 @@ __initial_sp
 ; <o> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
 Heap_Size EQU 0x200
-                AREA HEAP, NOINIT, READWRITE, ALIGN=3
+                AREA HEAP, NOINIT, READWRITE, ALIGN=4
 __heap_base
 Heap_Mem SPACE Heap_Size
 __heap_limit
