@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
-#include "c_functions.h"
+#include "functions.c"
 
 /*Экспортируем функцию из main.s написанную на ассемблере, которая выполняет задание.
 array_ptr - входной массив
