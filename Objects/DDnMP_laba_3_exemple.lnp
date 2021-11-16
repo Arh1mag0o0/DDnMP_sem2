@@ -1,9 +1,8 @@
 --cpu Cortex-M3
-".\objects\startup.o"
+".\objects\startup_stm32f103xb.o"
 ".\objects\main.o"
-".\objects\main_1.o"
 ".\objects\functions.o"
---strict --scatter ".\Objects\2_laba.sct"
+--strict --scatter ".\Objects\DDnMP_laba_3_exemple.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
---list ".\Listings\2_laba.map" -o .\Objects\2_laba.axf
+--list ".\Listings\DDnMP_laba_3_exemple.map" -o .\Objects\DDnMP_laba_3_exemple.axf

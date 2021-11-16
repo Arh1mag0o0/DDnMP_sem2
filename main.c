@@ -1,50 +1,126 @@
-#include <stdio.h>
-#include <stdint.h>
+
+#include "main.h"
 #include "functions.h"
+#define GPIO_PIN_0                 ((uint16_t)0x0001)  /* Pin 0 selected    */
+#define GPIO_PIN_1                 ((uint16_t)0x0002)  /* Pin 1 selected    */
+#define GPIO_PIN_2                 ((uint16_t)0x0004)  /* Pin 2 selected    */
+#define GPIO_PIN_3                 ((uint16_t)0x0008)  /* Pin 3 selected    */
+#define GPIO_PIN_4                 ((uint16_t)0x0010)  /* Pin 4 selected    */
+#define GPIO_PIN_5                 ((uint16_t)0x0020)  /* Pin 5 selected    */
+#define GPIO_PIN_6                 ((uint16_t)0x0040)  /* Pin 6 selected    */
+#define GPIO_PIN_7                 ((uint16_t)0x0080)  /* Pin 7 selected    */
+#define GPIO_PIN_8                 ((uint16_t)0x0100)  /* Pin 8 selected    */
+#define GPIO_PIN_9                 ((uint16_t)0x0200)  /* Pin 9 selected    */
+#define GPIO_PIN_10                ((uint16_t)0x0400)  /* Pin 10 selected   */
+#define GPIO_PIN_11                ((uint16_t)0x0800)  /* Pin 11 selected   */
+#define GPIO_PIN_12                ((uint16_t)0x1000)  /* Pin 12 selected   */
+#define GPIO_PIN_13                ((uint16_t)0x2000)  /* Pin 13 selected   */
+#define GPIO_PIN_14                ((uint16_t)0x4000)  /* Pin 14 selected   */
+#define GPIO_PIN_15                ((uint16_t)0x8000)  /* Pin 15 selected   */
+#define GPIO_PIN_All               ((uint16_t)0xFFFF)  /* All pins selected */
 
-/* Задание:
-сформировать 4 массива, найти в них число x. 
-Все числа, стоящие после этого числа, переписать в другой массив.
-*/
 
-// инициализируем первичные массивы с числами для решения задания 
-int32_t array_original_1 [] = {-1,2,-3,2546,20,50};
-int32_t array_original_2 [] = {-1,2,-3,4,-5,6,7,22,9,-10,102,1025,1210,55,84,54,75,20,65};
-int32_t array_original_3 [] = {-1,2,-3,4,-5,6,7,22,9,-10};
-int32_t array_original_4 [] = {-1,2,-3,4,-5,6,7,22,9,-10};
+int main(void)
+{
+	
+	/****************************************************************/
+	/*Инициализация порта A пина 5 на выход для моргания светодиодом*/
+	/****************************************************************/
+	
+	/* Установка регистра CRL битов MODE5[1:0] на максимальную частоту 50 МHz */
+	/* 
+	Макроподстановки
+	
+	GPIO_CRL_MODE5_0 =       0b0000 0000 0001 0000 0000 0000 0000 0000
+	GPIO_CRL_MODE5_1 =       0b0000 0000 0010 0000 0000 0000 0000 0000
+	GPIO_CRL_CNF5_0 =        0b0000 0000 0100 0000 0000 0000 0000 0000
+	GPIO_CRL_CNF5_1 =        0b0000 0000 1000 0000 0000 0000 0000 0000
+	RCC_APB2ENR_IOPAEN_Msk = 0b0000 0000 0100 0000 0000 0000 0000 0100
+	*/
+		/*Включение тактирования для порта А*/
+	RCC->APB2ENR = RCC->APB2ENR | RCC_APB2ENR_IOPAEN_Msk;
+	
+    GPIOA->CRL = (GPIOA->CRL) 
+    | ( GPIO_CRL_MODE0_0 | GPIO_CRL_MODE0_1) 
+    | ( GPIO_CRL_MODE1_0 | GPIO_CRL_MODE1_1) 
+    | ( GPIO_CRL_MODE2_0 | GPIO_CRL_MODE2_1) 
+    | ( GPIO_CRL_MODE3_0 | GPIO_CRL_MODE3_1)
+    | ( GPIO_CRL_MODE4_0 | GPIO_CRL_MODE4_1)
+    | ( GPIO_CRL_MODE5_0 | GPIO_CRL_MODE5_1)
+    | ( GPIO_CRL_MODE6_0 | GPIO_CRL_MODE6_1)
+    | ( GPIO_CRL_MODE7_0 | GPIO_CRL_MODE7_1);
 
-// Объявляем выходные массивы для решения задания 4 для ассемблера и 4 для Си
-int32_t array_a1[sizeof(array_original_1)/sizeof(int32_t) ];
-int32_t array_a2[sizeof(array_original_2)/sizeof(int32_t) ];
-int32_t array_a3[sizeof(array_original_3)/sizeof(int32_t) ];
-int32_t array_a4[sizeof(array_original_4)/sizeof(int32_t) ];
-int32_t arrayc1[sizeof(array_original_1)/sizeof(int32_t) ];
-int32_t arrayc2[sizeof(array_original_2)/sizeof(int32_t) ];
-int32_t arrayc3[sizeof(array_original_3)/sizeof(int32_t) ];
-int32_t arrayc4[sizeof(array_original_4)/sizeof(int32_t) ];
-
-// Основная программа
-int main () {    
+	/* Установка регистра CRL битов CNF5[1:0] на тип выхода push-pull */
+    GPIOA->CRL = (GPIOA->CRL) 
+    & ( ~( GPIO_CRL_CNF0_0 | GPIO_CRL_CNF0_1))
+    & ( ~( GPIO_CRL_CNF1_0 | GPIO_CRL_CNF1_1))
+    & ( ~( GPIO_CRL_CNF2_0 | GPIO_CRL_CNF2_1))
+    & ( ~( GPIO_CRL_CNF3_0 | GPIO_CRL_CNF3_1))
+    & ( ~( GPIO_CRL_CNF4_0 | GPIO_CRL_CNF4_1))
+    & ( ~( GPIO_CRL_CNF5_0 | GPIO_CRL_CNF5_1))
+    & ( ~( GPIO_CRL_CNF6_0 | GPIO_CRL_CNF6_1))
+    & ( ~( GPIO_CRL_CNF7_0 | GPIO_CRL_CNF7_1));
     
-    // объявляем элемент, который будем искать в массиве, для каждого массива можно выбирать любое число
-int32_t x = 20;
+		RCC->APB2ENR = RCC->APB2ENR | RCC_APB2ENR_IOPCEN_Msk;
+        GPIOC->CRL = (GPIOC->CRL) 
+    | ( GPIO_CRL_MODE0_0 | GPIO_CRL_MODE0_1) 
+    | ( GPIO_CRL_MODE1_0 | GPIO_CRL_MODE1_1) 
+    | ( GPIO_CRL_MODE2_0 | GPIO_CRL_MODE2_1) 
+    | ( GPIO_CRL_MODE3_0 | GPIO_CRL_MODE3_1)
+    | ( GPIO_CRL_MODE4_0 | GPIO_CRL_MODE4_1)
+    | ( GPIO_CRL_MODE5_0 | GPIO_CRL_MODE5_1)
+    | ( GPIO_CRL_MODE6_0 | GPIO_CRL_MODE6_1)
+    | ( GPIO_CRL_MODE7_0 | GPIO_CRL_MODE7_1);
 
-    // вызываем функцию, которая выполняет задание на ассемблере для каждого массива отдельно
-    lab_asm(array_original_1,sizeof(array_original_1)/sizeof(int32_t), array_a1, x);
-    x = 75;// поменяем искомый эллемент
-    lab_asm(array_original_2,sizeof(array_original_2)/sizeof(int32_t), array_a2, x);
-    x = 22;// поменяем искомый эллемент
-    lab_asm(array_original_3,sizeof(array_original_3)/sizeof(int32_t), array_a3, x);
-    lab_asm(array_original_4,sizeof(array_original_4)/sizeof(int32_t), array_a4, x);
-    x = -3;// поменяем искомый эллемент
-    
-    // вызываем функцию, которая выполняет задание на Си для каждого массива отдельно
-    ableev_lab_c(array_original_1, sizeof(array_original_1)/sizeof(int32_t), x, arrayc1);
-    x = 75;// поменяем искомый эллемент
-    ableev_lab_c(array_original_2, sizeof(array_original_2)/sizeof(int32_t), x, arrayc2);
-    ableev_lab_c(array_original_3, sizeof(array_original_3)/sizeof(int32_t), x, arrayc3);
-    x = 2;// поменяем искомый эллемент
-    ableev_lab_c(array_original_4, sizeof(array_original_4)/sizeof(int32_t), x, arrayc4);
-    
-return 0;
+	/* Установка регистра CRL битов CNF5[1:0] на тип выхода push-pull */
+    GPIOC->CRL = (GPIOC->CRL) 
+    & ( ~( GPIO_CRL_CNF0_0 | GPIO_CRL_CNF0_1))
+    & ( ~( GPIO_CRL_CNF1_0 | GPIO_CRL_CNF1_1))
+    & ( ~( GPIO_CRL_CNF2_0 | GPIO_CRL_CNF2_1))
+    & ( ~( GPIO_CRL_CNF3_0 | GPIO_CRL_CNF3_1))
+    & ( ~( GPIO_CRL_CNF4_0 | GPIO_CRL_CNF4_1))
+    & ( ~( GPIO_CRL_CNF5_0 | GPIO_CRL_CNF5_1))
+    & ( ~( GPIO_CRL_CNF6_0 | GPIO_CRL_CNF6_1))
+    & ( ~( GPIO_CRL_CNF7_0 | GPIO_CRL_CNF7_1));
+    /****************************************************************/
+	/*Инициализация порта С пина 13 на вход для детектирования нажатия кнопки*/
+	/****************************************************************/
+	
+	/* Установка регистра CRL битов MODE13[1:0] на максимальную частоту 50 МHz */
+	/* 
+	Макроподстановки
+	
+	GPIO_CRH_MODE13_0 = 0b0000 0000 0001 0000 0000 0000 0000 0000
+	GPIO_CRH_MODE13_1 = 0b0000 0000 0010 0000 0000 0000 0000 0000
+	
+	GPIO_CRH_CNF13_0 = 0b0000 0000 0100 0000 0000 0000 0000 0000
+	GPIO_CRH_CNF13_1 = 0b0000 0000 1000 0000 0000 0000 0000 0000
+	*/
+	
+	/*Включение тактирования для портаC*/
+	RCC->APB2ENR = RCC->APB2ENR | RCC_APB2ENR_IOPCEN_Msk;
+	
+	GPIOC->CRH = (GPIOC->CRH) & ( ~( GPIO_CRH_MODE13_0 | GPIO_CRH_MODE13_1));
+	/* Установка регистра CRL битов CNF13[1:0] на тип входа pull-up */
+	GPIOC->CRH = ((GPIOC->CRH) | ( GPIO_CRH_CNF13_0 | GPIO_CRH_MODE13_1));
+	GPIOC->ODR = ((GPIOC->ODR) | ( GPIO_PIN_13));
+
+//внешняя кнопка подключенная к пину 10
+    GPIOC->CRH = (GPIOC->CRH) & ( ~( GPIO_CRH_MODE11_0 | GPIO_CRH_MODE11_1));
+	/* Установка регистра CRL битов CNF13[1:0] на тип входа pull-up */
+	GPIOC->CRH = ((GPIOC->CRH) | ( GPIO_CRH_CNF11_0 | GPIO_CRH_MODE11_1));
+	GPIOC->ODR = ((GPIOC->ODR) | ( GPIO_PIN_11)); 
+   
+	/*Инициализация прерываний для примера №3*/
+	init_IT_for_exemple_3();
+	
+  while (1)
+  {
+		/******EXEMPLE_1*******/
+	led_blink_exemple_1(800000);
+		/******EXEMPLE_1*******/
+		//button_led_exemple_2();
+		/******EXEMPLE_1*******/
+       // init_IT_for_exemple_3();
+  }
 }

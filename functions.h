@@ -1,30 +1,12 @@
 #include <stdio.h>
 #include <stdint.h>
 
-/*Экспортируем функцию из main.s написанную на ассемблере, которая выполняет задание.
-array_ptr - входной массив
-arrray_size - размер входного массива
-new_array_ptr - выходной массив
-x - искомое число
-*/
-extern void lab_asm (int32_t* array_ptr, size_t array_size, int32_t* new_array_ptr, int32_t x );
+/*Определение прототипов функциий*/
+void led_blink_exemple_1(uint32_t tick_delay);
+void button_led_exemple_2(void);
 
-/*функция, которая выполняет задание на языке си
-arr[] - входной массив
-size - размер входного массива
-n - искомое число 
-out[] - выходной массив
-*/
-void ableev_lab_c(int32_t arr[], size_t size, int32_t n, int32_t out[]) {
+void change_led_state_IT_exemple_3(void);
+void init_IT_for_exemple_3(void);
 
-    // в переменную 'b' будет возвращяться номер эллемента стоящего после искомого числа   
-int b;
-    b = search_x(arr, size, n);
-    write (arr, size, out, b);
-}
-
-
-
-
-	
+void delay (uint32_t ticks);
 
