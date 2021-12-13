@@ -3,7 +3,7 @@
  * Auto generated Run-Time-Environment Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'CMSIS_PWM' 
+ * Project: 'DDnMP_laba_3_exemple' 
  * Target:  'Target 1' 
  */
 
