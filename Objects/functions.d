@@ -1,4 +1,4 @@
-./objects/main.o: main.c functions.h \
+./objects/functions.o: functions.c functions.h \
   C:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include\stm32f10x.h \
   RTE\_Target_1\RTE_Components.h \
   C:\Users\Admin\AppData\Local\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include\core_cm3.h \
