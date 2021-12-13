@@ -3,7 +3,7 @@
  * Auto generated Run-Time-Environment Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'DDnMP_laba_3_exemple' 
+ * Project: '3.1' 
  * Target:  'Target 1' 
  */
 

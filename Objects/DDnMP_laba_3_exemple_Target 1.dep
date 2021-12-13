@@ -1,25 +1,0 @@
-Dependencies for Project 'DDnMP_laba_3_exemple', Target 'Target 1': (DO NOT MODIFY !)
-CompilerVersion: 5060960::V5.06 update 7 (build 960)::.\ARMCC
-F (.\startup_stm32f103xb.s)(0x5FBD1FB7)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork -I.\RTE\Device\STM32F103RB-I.\RTE\_Target_1-IC:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-IC:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\RTE_Driver--pd "__UVISION_VERSION SETA 535" --pd "_RTE_ SETA 1" --pd "STM32F10X_MD SETA 1" --pd "_RTE_ SETA 1"--list .\listings\startup_stm32f103xb.lst --xref -o .\objects\startup_stm32f103xb.o --depend .\objects\startup_stm32f103xb.d)
-F (.\main.c)(0x619BADAA)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\Device\STM32F103RB-I.\RTE\_Target_1-IC:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-IC:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\RTE_Driver-D__UVISION_VERSION="535" -D_RTE_ -DSTM32F10X_MD -D_RTE_-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
-I (main.h)(0x5FBD1FAB)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025318E)
-I (stm32f101xb.h)(0x5FBD1FBB)
-F (.\main.h)(0x5FBD1FAB)()
-F (.\stm32f101xb.h)(0x5FBD1FBB)()
-F (C:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\RTE_Driver\DMA_STM32F10x.c)(0x5617372E)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\Device\STM32F103RB-I.\RTE\_Target_1-IC:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-IC:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\RTE_Driver-D__UVISION_VERSION="535" -D_RTE_ -DSTM32F10X_MD -D_RTE_-o .\objects\dma_stm32f10x.o --omf_browse .\objects\dma_stm32f10x.crf --depend .\objects\dma_stm32f10x.d)
-I (C:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\RTE_Driver\DMA_STM32F10x.h)(0x5BCEC000)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x6025318E)
-I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x6025318C)
-I (C:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include\stm32f10x.h)(0x5825467C)
-I (.\RTE\_Target_1\RTE_Components.h)(0x619BAE99)
-F (C:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\RTE_Driver\GPIO_STM32F10x.c)(0x571F051A)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\Device\STM32F103RB-I.\RTE\_Target_1-IC:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-IC:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\RTE_Driver-D__UVISION_VERSION="535" -D_RTE_ -DSTM32F10X_MD -D_RTE_-o .\objects\gpio_stm32f10x.o --omf_browse .\objects\gpio_stm32f10x.crf --depend .\objects\gpio_stm32f10x.d)
-I (C:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\RTE_Driver\GPIO_STM32F10x.h)(0x5617372E)
-I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x6025318C)
-I (C:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include\stm32f10x.h)(0x5825467C)
-I (.\RTE\_Target_1\RTE_Components.h)(0x619BAE99)
-F (RTE\Device\STM32F103RB\RTE_Device.h)(0x5927EDB6)()
-F (RTE\Device\STM32F103RB\startup_stm32f10x_md.s)(0x5825467C)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork -I.\RTE\Device\STM32F103RB-I.\RTE\_Target_1-IC:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-IC:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\RTE_Driver--pd "__UVISION_VERSION SETA 535" --pd "_RTE_ SETA 1" --pd "STM32F10X_MD SETA 1" --pd "_RTE_ SETA 1"--list .\listings\startup_stm32f10x_md.lst --xref -o .\objects\startup_stm32f10x_md.o --depend .\objects\startup_stm32f10x_md.d)
-F (RTE\Device\STM32F103RB\system_stm32f10x.c)(0x5825467C)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\Device\STM32F103RB-I.\RTE\_Target_1-IC:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-IC:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\RTE_Driver-D__UVISION_VERSION="535" -D_RTE_ -DSTM32F10X_MD -D_RTE_-o .\objects\system_stm32f10x.o --omf_browse .\objects\system_stm32f10x.crf --depend .\objects\system_stm32f10x.d)
-I (C:\Users\Admin\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include\stm32f10x.h)(0x5825467C)
-I (.\RTE\_Target_1\RTE_Components.h)(0x619BAE99)
