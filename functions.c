@@ -1,23 +1,7 @@
 
 #include "functions.h"
-#define GPIO_PIN_0                 ((uint16_t)0x0001)  /* Pin 0 selected    */
-#define GPIO_PIN_1                 ((uint16_t)0x0002)  /* Pin 1 selected    */
-#define GPIO_PIN_2                 ((uint16_t)0x0004)  /* Pin 2 selected    */
-#define GPIO_PIN_3                 ((uint16_t)0x0008)  /* Pin 3 selected    */
-#define GPIO_PIN_4                 ((uint16_t)0x0010)  /* Pin 4 selected    */
-#define GPIO_PIN_5                 ((uint16_t)0x0020)  /* Pin 5 selected    */
-#define GPIO_PIN_6                 ((uint16_t)0x0040)  /* Pin 6 selected    */
-#define GPIO_PIN_7                 ((uint16_t)0x0080)  /* Pin 7 selected    */
-#define GPIO_PIN_8                 ((uint16_t)0x0100)  /* Pin 8 selected    */
-#define GPIO_PIN_9                 ((uint16_t)0x0200)  /* Pin 9 selected    */
-#define GPIO_PIN_10                ((uint16_t)0x0400)  /* Pin 10 selected   */
-#define GPIO_PIN_11                ((uint16_t)0x0800)  /* Pin 11 selected   */
-#define GPIO_PIN_12                ((uint16_t)0x1000)  /* Pin 12 selected   */
-#define GPIO_PIN_13                ((uint16_t)0x2000)  /* Pin 13 selected   */
-#define GPIO_PIN_14                ((uint16_t)0x4000)  /* Pin 14 selected   */
-#define GPIO_PIN_15                ((uint16_t)0x8000)  /* Pin 15 selected   */
-#define GPIO_PIN_All               ((uint16_t)0xFFFF)  /* All pins selected */
-uint8_t tim2_count = 0;
+uint16_t led_up = 0;        //для увеличения яркости
+uint16_t led_down = 1000;   //для уменьшения яркости
 
 void pwm_pin_output_14 (void)           //настройка TIM1 канала 4 на ПВМ выход                
 {
@@ -98,29 +82,34 @@ void pwm_pin_output_11 (void)           //настройка TIM1 канала 1
 
 	//делитель
 	TIM1->PSC = 72;
-	//значение перезагрузки
+	
+    //значение перезагрузки
     TIM1->ARR = 1000;
-	//коэф. заполнения
+	
+    //коэф. заполнения
 	TIM1->CCR2 = 1;
     
 	//настроим на выход канал 4, активный уровень низкий 
 	TIM1->CCER |= TIM_CCER_CC1E & ~TIM_CCER_CC1P;
-
 	TIM1->BDTR |= TIM_BDTR_MOE;
-	//PWM mode 1, прямой ШИМ 4 канал
+	
+    //PWM mode 1, прямой ШИМ 4 канал
     TIM1->CCMR1 = TIM_CCMR1_OC1M_2 | TIM_CCMR1_OC1M_1; 
-	//считаем вверх
+	
+    //считаем вверх
 	TIM1->CR1 &= ~TIM_CR1_DIR;
-	//выравнивание по фронту, Fast PWM
+	
+    //выравнивание по фронту, Fast PWM
 	TIM1->CR1 &= ~TIM_CR1_CMS;
-	//включаем счётчик
+	
+    //включаем счётчик
 	TIM1->CR1 |= TIM_CR1_CEN;  
 
 }
 
 void gpiox_push_pull(int32_t portx, int32_t piny)       //установка на push_pull порта x пина y,  не доделанная (слишком много(однотипного) кода, можно проще реализовать)
 {
-    RCC->APB2ENR |= RCC_APB2ENR_IOPAEN | RCC_APB2ENR_AFIOEN;
+    RCC->APB2ENR |= RCC_APB2ENR_IOPAEN | RCC_APB2ENR_AFIOEN; //включение тактирования
     if (portx == 0xA) // для портов А, выставляет выбранный пин(1-15) на push_pull
     {
     if (piny == 0){
@@ -351,14 +340,6 @@ void gpiox_push_pull(int32_t portx, int32_t piny)       //установка н�
 	GPIOB->CRH	|= GPIO_CRH_MODE15_1; }     
     }      
 }
-
-void delay (uint32_t ticks)             //типо задержка по времени, чем больше передаваемое значение тем больше задержка (но чет не работает)
-{
-	for (uint32_t i = 0; i < ticks; i++)
-	{
-	}
-}
-
 void TIM2_Init(void)                    //настройка таймера 2
 {
     RCC->APB1ENR |= RCC_APB1ENR_TIM2EN; // тактирование таймера
@@ -369,84 +350,32 @@ void TIM2_Init(void)                    //настройка таймера 2
 
 void TIM2_IRQHandler(void)              //выполнение прерывания при переполнении таймера 2
 {
-    if (TIM2->SR & TIM_SR_UIF)
+    if (TIM2->SR & TIM_SR_UIF)          //если произошло обновление таймера
     {
-        TIM2->SR &= ~(TIM_SR_UIF);
-    switch(tim2_count)
-    {
-        case 0:  
-        {
-          TIM1->CCR4 = 100;
-            TIM1->CCR3 = 100;
-          TIM1->CCR2 = 100; 
-        } 
-        break; 
-        case 1:
-        {
-          TIM1->CCR4 = 200;
-          TIM1->CCR3 = 200;  
-          TIM1->CCR2 = 200; 
-        }            
-        break;        
-        case 2:
-        {
-          TIM1->CCR4 = 300;
-          TIM1->CCR3 = 300;  
-          TIM1->CCR2 = 300; 
-        }            
-        break;  
-        case 3:
-        {
-          TIM1->CCR4 = 400;
-          TIM1->CCR3 = 400;
-          TIM1->CCR2 = 400; 
-        }            
-        break;
-        case 4: 
-        {
-          TIM1->CCR4 = 500;
-          TIM1->CCR3 = 500;
-          TIM1->CCR2 = 500; 
-        }            
-        break; 
-        case 5: 
-        {
-          TIM1->CCR4 = 600;
-          TIM1->CCR3 = 600;
-          TIM1->CCR2 = 600; 
-        }
-        break;
-        case 6: 
-        {
-          TIM1->CCR4 = 700;
-          TIM1->CCR3 = 700;
-          TIM1->CCR2 = 700; 
-        }            
-        break;
-        case 7:  
-        {
-          TIM1->CCR4 = 800;
-          TIM1->CCR2 = 800; 
-        }            
-        break;
-        case 8:  
-        {
-          TIM1->CCR4 = 900;
-          TIM1->CCR3 = 900;
-          TIM1->CCR2 = 900; 
-        }            
-        break;
-        case 9:  
-        {
-          TIM1->CCR4 = 1000;
-          TIM1->CCR3 = 1000;
-          TIM1->CCR2 = 1000; 
-        }            
-        break;        
-    }
-    tim2_count++;
-    if(tim2_count>9) 
-        tim2_count=0;
+        TIM2->SR &= ~(TIM_SR_UIF);      //сброс бита обновления
+        while (led_up<1000)             //плавное загарание
+            {
+                TIM1->CCR4 = led_up;
+                TIM1->CCR2 = led_up; 
+                led_up = led_up+20; 
+                break;
+            }         
+        if (led_up>995)
+            {
+                while (led_down>25)             //плавное затухание
+                {
+                    TIM1->CCR4 = led_down;
+                    TIM1->CCR2 = led_down; 
+                    led_down = led_down-20; 
+                    break;
+                }         
+            }
+        if (led_up>995 & led_down<25)   //сброс счетчиков загорания и затухания псоле первого цикла
+            {
+                led_up = 0;
+                led_down = 1000;
+            }    
+            
     }
 }
 
