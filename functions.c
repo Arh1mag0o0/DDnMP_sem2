@@ -18,19 +18,18 @@
 #define GPIO_PIN_15                ((uint16_t)0x8000)  /* Pin 15 selected   */
 #define GPIO_PIN_All               ((uint16_t)0xFFFF)  /* All pins selected */
 
-uint32_t pin_state = 0;
 
 void pwm_pin_output_14 (void)
 {
-  // Тактирование  GPIOA , TIM1, альтернативных функций порта
+    // Тактирование  GPIOA , TIM1, альтернативных функций порта
 	RCC->APB2ENR |= RCC_APB2ENR_IOPAEN | RCC_APB2ENR_TIM1EN | RCC_APB2ENR_AFIOEN;
 
 	//делитель
 	TIM1->PSC = 72;
 	//значение перезагрузки
-        TIM1->ARR = 1000;
+    TIM1->ARR = 1000;
 	//коэф. заполнения
-	TIM1->CCR4 = 100;
+	TIM1->CCR4 = 1;
 
 	//настроим на выход канал 4, активный уровень низкий 
 	TIM1->CCER |= TIM_CCER_CC4E & ~TIM_CCER_CC4P;
@@ -46,28 +45,6 @@ void pwm_pin_output_14 (void)
 	//включаем счётчик
 	TIM1->CR1 |= TIM_CR1_CEN;  
 
-}
-
-
-void tim_pwm (void) //попытка настроить таймер на генерацию шим
-{
-    RCC->APB1ENR |= RCC_APB1ENR_TIM2EN; //включение тактирования таймера TIM2 
-    
-    //настройска CR1, SMCR, EGR, CR2< CCER, CCMR1, CCMR2
-    TIM2->CR1 &= (~TIM_CR1_CKD & ~TIM_CR1_DIR & ~TIM_CR1_ARPE & ~TIM_CR1_CMS);
-    TIM2->SMCR &= ((~TIM_SMCR_ECE & ~TIM_SMCR_SMS & ~TIM_SMCR_MSM)| TIM_SMCR_ETP);
-    TIM2->EGR |= TIM_EGR_UG;
-    TIM2->CR2 &= ~TIM_CR2_MMS;
-    TIM2->CCER &= (~TIM_CCER_CC1E & ~TIM_CCER_CC2E & ~TIM_CCER_CC3E & ~TIM_CCER_CC4E);
-    TIM2->CCMR1 &= (~TIM_CCMR1_CC1S & ~TIM_CCMR1_CC2S & ~TIM_CCMR1_OC1FE & ~TIM_CCMR1_OC2FE) | TIM_CCMR1_OC1CE | TIM_CCMR1_OC2CE | TIM_CCMR1_OC1M_1 | TIM_CCMR1_OC1M_2 | TIM_CCMR1_OC2M_1 | TIM_CCMR1_OC2M_2;
-    TIM2->CCMR2 &= (~TIM_CCMR2_CC3S & ~TIM_CCMR2_CC4S & ~TIM_CCMR2_OC3FE & ~TIM_CCMR2_OC4FE) | TIM_CCMR2_OC3CE | TIM_CCMR2_OC4CE | TIM_CCMR2_OC3M_1 | TIM_CCMR2_OC4M_2 | TIM_CCMR2_OC4M_1 | TIM_CCMR2_OC3M_2;
-    TIM2->CCER |= TIM_CCER_CC1E | TIM_CCER_CC2E | TIM_CCER_CC3E | TIM_CCER_CC4E;
-    TIM2->ARR = 65535;
-    TIM2->PSC = 1;
-    RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
-    GPIOA->CRL |= GPIO_CRL_CNF0_0 | GPIO_CRL_CNF1_0 | GPIO_CRH_CNF15_0 | GPIO_CRL_MODE0_0  | GPIO_CRL_MODE1_0 | GPIO_CRH_MODE15_0 | GPIO_CRL_CNF0_1 | GPIO_CRL_CNF1_1 | GPIO_CRH_CNF15_1 | GPIO_CRL_MODE0_1  | GPIO_CRL_MODE1_1 | GPIO_CRH_MODE15_1;
-    TIM2->BDTR |= TIM_BDTR_MOE;
-    TIM2->CR1 |= TIM_CR1_CEN;
 }
 
 void gpiox_push_pull(int32_t portx, int32_t piny)
@@ -194,5 +171,3 @@ void delay (uint32_t ticks)
 	{
 	}
 }
-
-
